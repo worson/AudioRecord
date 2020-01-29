@@ -1,0 +1,249 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent"
+  tools:context=".PcmRecorderActivity">
+
+  <EditText
+    android:id="@+id/et_file_prefix"
+    android:layout_width="150dp"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="8dp"
+    android:layout_marginTop="20dp"
+    android:padding="5dp"
+    android:hint="音频文件前缀"
+    android:maxLines="1"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="parent" />
+
+  <TextView
+    android:id="@+id/tv_frequecy"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:textSize="17sp"
+    android:layout_marginTop="40dp"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toBottomOf="@+id/et_file_prefix"
+    android:text="录音频率"/>
+
+  <RadioGroup
+    android:id="@+id/rg_frequecy"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="28dp"
+    android:layout_marginEnd="8dp"
+    app:layout_constraintBottom_toBottomOf="@+id/tv_frequecy"
+    app:layout_constraintStart_toEndOf="@+id/tv_frequecy"
+    app:layout_constraintTop_toTopOf="@+id/tv_frequecy">
+    <RadioButton
+      android:id="@+id/rb_frequcy_16k"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:text="16000k"
+      android:checked="true"
+      android:textSize="20sp" />
+
+    <RadioButton
+      android:id="@+id/rb_frequcy_32k"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:text="32000k"
+      android:textSize="20sp" />
+
+    <RadioButton
+      android:id="@+id/rb_frequcy_48k"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:text="48000k"
+      android:textSize="20sp" />
+
+    <RadioButton
+      android:id="@+id/rb_frequcy_192k"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:text="192000k"
+      android:textSize="20sp" />
+  </RadioGroup>
+
+  <TextView
+    android:id="@+id/tv_audio_source"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="录音模式"
+    android:textSize="17sp"
+    android:layout_marginTop="100dp"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toBottomOf="@+id/tv_frequecy" />
+
+  <RadioGroup
+    android:id="@+id/rg_audio_source"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="8dp"
+    android:layout_marginEnd="8dp"
+    android:orientation="vertical"
+    app:layout_constraintBottom_toBottomOf="@+id/tv_audio_source"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toEndOf="@+id/tv_audio_source"
+    app:layout_constraintTop_toTopOf="@+id/tv_audio_source">
+    <RadioButton
+      android:id="@+id/rb_source_default"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:text="默认"
+      android:checked="true"
+      android:textSize="20sp" />
+    <RadioButton
+      android:id="@+id/rb_source_communication"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:text="优先传输"
+      android:textSize="20sp" />
+    <RadioButton
+      android:id="@+id/rb_source_recognition"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:text="优先识别"
+      android:textSize="20sp" />
+
+    <RadioButton
+      android:id="@+id/rb_source_unprocessed"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:text="原始音频"
+      android:textSize="20sp" />
+  </RadioGroup>
+
+
+  <TextView
+    android:id="@+id/tv_channel"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="声道选择"
+    android:textSize="17sp"
+    android:layout_marginTop="80dp"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toBottomOf="@+id/tv_audio_source" />
+
+  <RadioGroup
+    android:id="@+id/rg_channel"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="8dp"
+    android:layout_marginEnd="8dp"
+    android:orientation="horizontal"
+    app:layout_constraintBottom_toBottomOf="@+id/tv_channel"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toEndOf="@+id/tv_channel"
+    app:layout_constraintTop_toTopOf="@+id/tv_channel">
+    <RadioButton
+      android:id="@+id/rb_channel_single"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:text="单声道"
+      android:checked="true"
+      android:textSize="20sp" />
+    <RadioButton
+      android:id="@+id/rb_channel_dual"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:text="双声道"
+      android:textSize="20sp" />
+  </RadioGroup>
+
+  <TextView
+    android:id="@+id/tv_file_format"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="文件格式"
+    android:textSize="17sp"
+    android:layout_marginTop="40dp"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toBottomOf="@+id/tv_channel" />
+
+  <RadioGroup
+    android:id="@+id/rg_file_format"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="8dp"
+    android:layout_marginEnd="8dp"
+    android:orientation="horizontal"
+    app:layout_constraintBottom_toBottomOf="@+id/tv_file_format"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toEndOf="@+id/tv_file_format"
+    app:layout_constraintTop_toTopOf="@+id/tv_file_format">
+    <RadioButton
+      android:id="@+id/rb_file_wav"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:text="Wav"
+      android:checked="true"
+      android:textSize="20sp" />
+    <RadioButton
+      android:id="@+id/rb_file_pcm"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:text="Pcm"
+      android:textSize="20sp" />
+  </RadioGroup>
+
+
+
+  <TextView
+    android:id="@+id/tv_tips"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="35dp"
+    android:layout_marginStart="8dp"
+    android:text="点击开始录音"
+    android:textSize="24sp"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toBottomOf="@+id/tv_file_format" />
+
+  <Button
+    android:id="@+id/bt_delete"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="8dp"
+    android:layout_marginStart="8dp"
+    android:layout_marginEnd="8dp"
+    android:layout_marginVertical="80dp"
+    android:text="删除"
+    android:textSize="24sp"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintEnd_toStartOf="@+id/bt_recorder"
+    app:layout_constraintStart_toStartOf="parent" />
+
+  <Button
+    android:id="@+id/bt_recorder"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="8dp"
+    android:layout_marginStart="8dp"
+    android:layout_marginEnd="8dp"
+    android:text="开始录音"
+    android:textSize="24sp"
+    android:layout_marginVertical="80dp"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent" />
+
+  <Button
+    android:id="@+id/bt_play"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="8dp"
+    android:layout_marginStart="8dp"
+    android:layout_marginEnd="8dp"
+    android:layout_marginVertical="80dp"
+    android:text="开始播放"
+    android:textSize="24sp"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toEndOf="@+id/bt_recorder" />
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
