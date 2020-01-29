@@ -35,9 +35,8 @@ public class PcmRecorder {
         mListener = listener;
         int channelConfig = channelCnt == 1 ? AudioFormat.CHANNEL_CONFIGURATION_MONO : AudioFormat.CHANNEL_CONFIGURATION_STEREO;
         int minBufSize = AudioRecord.getMinBufferSize(sampleRate, channelConfig, AUDIO_FORMAT);
-//        mBufSize = sampleRate * 20 / 1000 * channelCnt * AUDIO_FORMAT_IN_BYTE;
-        mBufSize = 400 * channelCnt;
-        int bufferSizeInBytes = 8 * minBufSize;
+        mBufSize = minBufSize;
+        int bufferSizeInBytes = minBufSize;
         AILog.i(TAG, "PcmRecorder: bufferSizeInBytes " + bufferSizeInBytes);
         mAudioRecord = new AudioRecord(audioSource, sampleRate, channelConfig, AUDIO_FORMAT, bufferSizeInBytes);
         AILog.d(TAG, "state: " + mAudioRecord.getState());
