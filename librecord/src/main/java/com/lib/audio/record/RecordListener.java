@@ -1,4 +1,4 @@
-package com.app.audio.record.record;
+package com.lib.audio.record;
 
 /**
  * 说明:
