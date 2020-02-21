@@ -1,5 +1,8 @@
 # AudioRecord
-本工程实现pcm多配置(采样率、文件格式可选)的录音和播放工具，可用户音频的录制。
+
+本工程实现pcm多配置(采样率、文件格式可选)的录音和播放工具，可用于音频的录制。
+
+工程代码:https://github.com/worson/AudioRecord.git
 
 ![主界面](img/picture_2020_01_29_14___52_41.png)
 

@@ -4,7 +4,7 @@ import android.content.Context;
 import android.media.AudioFormat;
 import android.media.AudioRecord;
 import android.os.Process;
-import com.sen.audio.record.utils.AILog;
+import com.lib.common.dlog.DLog;
 
 /**
  * 说明:
@@ -37,9 +37,9 @@ public class PcmRecorder {
         int minBufSize = AudioRecord.getMinBufferSize(sampleRate, channelConfig, AUDIO_FORMAT);
         mBufSize = minBufSize;
         int bufferSizeInBytes = minBufSize;
-        AILog.i(TAG, "PcmRecorder: bufferSizeInBytes " + bufferSizeInBytes);
+        DLog.i(TAG, "PcmRecorder: bufferSizeInBytes " + bufferSizeInBytes);
         mAudioRecord = new AudioRecord(audioSource, sampleRate, channelConfig, AUDIO_FORMAT, bufferSizeInBytes);
-        AILog.d(TAG, "state: " + mAudioRecord.getState());
+        DLog.d(TAG, "state: " + mAudioRecord.getState());
     }
 
     public void setRecordListener(RecordListener listener) {
@@ -48,7 +48,7 @@ public class PcmRecorder {
 
 
     public void start() {
-        AILog.d(TAG, "onStartRecord");
+        DLog.d(TAG, "onStartRecord");
 
         mAudioRecord.startRecording();
         mRecording = true;
@@ -57,23 +57,23 @@ public class PcmRecorder {
         if (mListener != null) {
             mListener.onStartRecord();
         } else {
-            AILog.w(TAG, "start: mListener is null");
+            DLog.w(TAG, "start: mListener is null");
         }
     }
 
     public void stop() {
-        AILog.d(TAG, "stopRecord");
+        DLog.d(TAG, "stopRecord");
         mStopFlag = true;
         mRecording = false;
         try {
             mRecordThread.join();
         } catch (InterruptedException e) {
-            AILog.d(TAG, "InterruptedException " + e.getMessage());
+            DLog.d(TAG, "InterruptedException " + e.getMessage());
         } finally {
             if (mListener != null) {
                 mListener.onStopRecord();
             } else {
-                AILog.d(TAG, "stop: mListener is null");
+                DLog.d(TAG, "stop: mListener is null");
             }
             mAudioRecord.stop();
             mAudioRecord.release();
@@ -94,11 +94,11 @@ public class PcmRecorder {
 
         @Override
         public void run() {
-            AILog.v(TAG, "thread run");
+            DLog.v(TAG, "thread run");
             Process.setThreadPriority(Process.THREAD_PRIORITY_URGENT_AUDIO);
 
             if (mAudioRecord.getState() == AudioRecord.STATE_UNINITIALIZED) {
-                AILog.d(TAG, "unInit");
+                DLog.d(TAG, "unInit");
                 return;
             }
 
@@ -106,14 +106,14 @@ public class PcmRecorder {
             while (!mStopFlag) {
                 int len = mAudioRecord.read(buffer, 0, buffer.length);
                 if (len != mBufSize) {
-                    AILog.e(TAG, "record read error:" + len);
+                    DLog.e(TAG, "record read error:" + len);
                 }
                 if (mListener != null) {
                     mListener.onRecordData(buffer);
                     continue;
                 }
             }
-            AILog.v(TAG, "thread end");
+            DLog.v(TAG, "thread end");
         }
     }
 

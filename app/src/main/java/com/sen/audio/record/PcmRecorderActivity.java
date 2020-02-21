@@ -11,18 +11,17 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
-import com.sen.audio.record.play.IPlayerCallback;
-import com.sen.audio.record.play.NativePlayer;
-import com.sen.audio.record.record.AudioUtil;
+import com.lib.audio.player.IPlayerCallback;
+import com.lib.audio.player.NativePlayer;
+import com.lib.audio.wav.PcmUtil;
+import com.lib.audio.wav.WavHeader;
+import com.lib.common.androidbase.global.GlobalContext;
+import com.lib.common.androidbase.task.HandlerUtil;
+import com.lib.common.androidbase.utils.PermissionUtil;
+import com.lib.common.dlog.DLog;
+import com.lib.common.io.string.Strings;
 import com.sen.audio.record.record.PcmRecorder;
 import com.sen.audio.record.record.RecordListener;
-import com.sen.audio.record.utils.AILog;
-import com.sen.audio.record.utils.FileUtil;
-import com.sen.audio.record.utils.GlobalContext;
-import com.sen.audio.record.utils.HandlerUtil;
-import com.sen.audio.record.utils.IOUtils;
-import com.sen.audio.record.utils.PermissionUtil;
-import com.sen.audio.record.utils.StringUtils;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -70,7 +69,7 @@ public class PcmRecorderActivity extends AppCompatActivity {
 
         PermissionUtil.requestPermissions(this, 0, new String[]{permission.RECORD_AUDIO, permission.WRITE_EXTERNAL_STORAGE, permission.READ_EXTERNAL_STORAGE});
 
-        AILog.i(TAG, "onCreate: mRecordFileDir "+mRecordFileDir);
+        DLog.i(TAG, "onCreate: mRecordFileDir "+mRecordFileDir);
         et_file_prefix = findViewById(R.id.et_file_prefix);
         et_file_prefix.setFocusableInTouchMode(false);
 
@@ -125,7 +124,7 @@ public class PcmRecorderActivity extends AppCompatActivity {
         bt_delete.setVisibility(View.INVISIBLE);
         bt_play.setVisibility(View.INVISIBLE);
         if (mLastRecordFile.exists()) {
-            IOUtils.delFileOrFolder(mLastRecordFile);
+            mLastRecordFile.delete();
             mLastRecordFile = null;
         }
     }
@@ -208,7 +207,7 @@ public class PcmRecorderActivity extends AppCompatActivity {
     private RecordListener mRecordListener = new RecordListener() {
         @Override
         public void onStartRecord() {
-            AILog.i(TAG, "onStartRecord: ");
+            DLog.i(TAG, "onStartRecord: ");
         }
 
         @Override
@@ -222,7 +221,7 @@ public class PcmRecorderActivity extends AppCompatActivity {
 
         @Override
         public void onStopRecord() {
-            AILog.i(TAG, "onStopRecord: ");
+            DLog.i(TAG, "onStopRecord: ");
             HandlerUtil.postInMainThread(new Runnable() {
                 @Override
                 public void run() {
@@ -235,14 +234,14 @@ public class PcmRecorderActivity extends AppCompatActivity {
                     SimpleDateFormat sdf = new SimpleDateFormat("yyyy_MM_dd_HH___mm_ss");
                     Date date = new Date();
                     String fileName = String.format((mRecordFileDir + "/%s_" + sdf.format(date)),
-                        StringUtils.notEmpty(prefix) ? prefix : (rb_file_pcm.isChecked() ? "pcm" : "wav"));
+                        Strings.notEmpty(prefix) ? prefix : (rb_file_pcm.isChecked() ? "pcm" : "wav"));
                     if (rb_file_pcm.isChecked()) {
                         fileName = fileName + ".pcm";
-                        FileUtil.copyFile(mTempRecordFile.getAbsolutePath(), fileName);
+                        mTempRecordFile.renameTo(new File(fileName));
                     } else {
                         fileName = fileName + ".wav";
-                        AudioUtil.getInstance().convertWaveFile(rb_channel_dual.isChecked() ? 2 : 1
-                            , getAudioFrequecy(), mTempRecordFile.getAbsolutePath(), fileName);
+                        PcmUtil.toWav(mTempRecordFile.getAbsolutePath(), fileName,new WavHeader(rb_channel_dual.isChecked() ? 2 : 1
+                            , getAudioFrequecy(),16));
                     }
                     if (!rb_file_pcm.isChecked()) {
                         mLastRecordFile = new File(fileName);
@@ -256,7 +255,7 @@ public class PcmRecorderActivity extends AppCompatActivity {
     };
 
     private void startRecord() {
-        AILog.i(TAG, "startRecord: ");
+        DLog.i(TAG, "startRecord: ");
         checkEnvirement();
         if (rb_channel_dual.isChecked()) {
             mRecorder = new PcmRecorder(getAudioSource(), getAudioFrequecy(), 2);
@@ -279,7 +278,7 @@ public class PcmRecorderActivity extends AppCompatActivity {
     }
 
     private void stopRecord() {
-        AILog.i(TAG, "stopRecord: ");
+        DLog.i(TAG, "stopRecord: ");
         if (mRecorder != null) {
             mRecorder.stop();
             mRecorder = null;

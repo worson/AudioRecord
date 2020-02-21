@@ -1,9 +1,9 @@
 package com.sen.audio.record;
 
 import android.content.Intent;
-import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
-import com.sen.audio.record.utils.GlobalContext;
+import androidx.appcompat.app.AppCompatActivity;
+import com.lib.common.androidbase.global.GlobalContext;
 
 public class MainActivity extends AppCompatActivity {
 
