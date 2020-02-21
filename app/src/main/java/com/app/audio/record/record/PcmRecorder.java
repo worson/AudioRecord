@@ -1,4 +1,4 @@
-package com.sen.audio.record.record;
+package com.app.audio.record.record;
 
 import android.content.Context;
 import android.media.AudioFormat;

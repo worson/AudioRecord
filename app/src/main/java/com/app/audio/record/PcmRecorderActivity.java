@@ -1,4 +1,4 @@
-package com.sen.audio.record;
+package com.app.audio.record;
 
 import android.Manifest.permission;
 import android.media.MediaRecorder.AudioSource;
@@ -20,8 +20,8 @@ import com.lib.common.androidbase.task.HandlerUtil;
 import com.lib.common.androidbase.utils.PermissionUtil;
 import com.lib.common.dlog.DLog;
 import com.lib.common.io.string.Strings;
-import com.sen.audio.record.record.PcmRecorder;
-import com.sen.audio.record.record.RecordListener;
+import com.app.audio.record.record.PcmRecorder;
+import com.app.audio.record.record.RecordListener;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -240,8 +240,8 @@ public class PcmRecorderActivity extends AppCompatActivity {
                         mTempRecordFile.renameTo(new File(fileName));
                     } else {
                         fileName = fileName + ".wav";
-                        PcmUtil.toWav(mTempRecordFile.getAbsolutePath(), fileName,new WavHeader(rb_channel_dual.isChecked() ? 2 : 1
-                            , getAudioFrequecy(),16));
+                        PcmUtil.toWav(mTempRecordFile.getAbsolutePath(), fileName,new WavHeader(getAudioFrequecy(),rb_channel_dual.isChecked() ? 2 : 1
+                            , 16));
                     }
                     if (!rb_file_pcm.isChecked()) {
                         mLastRecordFile = new File(fileName);

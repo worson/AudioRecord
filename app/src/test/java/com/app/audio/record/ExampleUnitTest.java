@@ -1,4 +1,4 @@
-package com.sen.audio.record;
+package com.app.audio.record;
 
 import org.junit.Test;
 

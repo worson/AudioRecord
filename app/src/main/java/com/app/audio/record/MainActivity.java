@@ -1,4 +1,4 @@
-package com.sen.audio.record;
+package com.app.audio.record;
 
 import android.content.Intent;
 import android.os.Bundle;
