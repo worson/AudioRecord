@@ -13,15 +13,15 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import com.lib.audio.player.IPlayerCallback;
 import com.lib.audio.player.NativePlayer;
+import com.lib.audio.record.PcmRecorder;
+import com.lib.audio.record.RecordListener;
 import com.lib.audio.wav.PcmUtil;
 import com.lib.audio.wav.WavHeader;
 import com.lib.common.androidbase.global.GlobalContext;
 import com.lib.common.androidbase.task.HandlerUtil;
 import com.lib.common.androidbase.utils.PermissionUtil;
-import com.lib.common.dlog.DLog;
 import com.lib.common.io.string.Strings;
-import com.lib.audio.record.PcmRecorder;
-import com.lib.audio.record.RecordListener;
+import com.worson.lib.log.L;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -69,7 +69,7 @@ public class PcmRecorderActivity extends AppCompatActivity {
 
         PermissionUtil.requestPermissions(this, 0, new String[]{permission.RECORD_AUDIO, permission.WRITE_EXTERNAL_STORAGE, permission.READ_EXTERNAL_STORAGE});
 
-        DLog.i(TAG, "onCreate: mRecordFileDir "+mRecordFileDir);
+        L.i(TAG, "onCreate: mRecordFileDir "+mRecordFileDir);
         et_file_prefix = findViewById(R.id.et_file_prefix);
         et_file_prefix.setFocusableInTouchMode(false);
 
@@ -207,7 +207,7 @@ public class PcmRecorderActivity extends AppCompatActivity {
     private RecordListener mRecordListener = new RecordListener() {
         @Override
         public void onStartRecord() {
-            DLog.i(TAG, "onStartRecord: ");
+            L.i(TAG, "onStartRecord: ");
         }
 
         @Override
@@ -221,7 +221,7 @@ public class PcmRecorderActivity extends AppCompatActivity {
 
         @Override
         public void onStopRecord() {
-            DLog.i(TAG, "onStopRecord: ");
+            L.i(TAG, "onStopRecord: ");
             HandlerUtil.postInMainThread(new Runnable() {
                 @Override
                 public void run() {
@@ -255,7 +255,7 @@ public class PcmRecorderActivity extends AppCompatActivity {
     };
 
     private void startRecord() {
-        DLog.i(TAG, "startRecord: ");
+        L.i(TAG, "startRecord: ");
         checkEnvirement();
         if (rb_channel_dual.isChecked()) {
             mRecorder = new PcmRecorder(getAudioSource(), getAudioFrequecy(), 2);
@@ -278,7 +278,7 @@ public class PcmRecorderActivity extends AppCompatActivity {
     }
 
     private void stopRecord() {
-        DLog.i(TAG, "stopRecord: ");
+        L.i(TAG, "stopRecord: ");
         if (mRecorder != null) {
             mRecorder.stop();
             mRecorder = null;
